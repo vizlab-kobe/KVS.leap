@@ -9,6 +9,7 @@
 #include <KVS.oculus/Lib/Screen.h>
 
 #include "EventListener.h"
+#include "GestureEventListener.h"
 
 
 int main( int argc, char** argv )
@@ -34,7 +35,8 @@ int main( int argc, char** argv )
     screen.registerObject( object );
     screen.show();
 
-    kvs::leap::EventListener event( &screen );
+//    kvs::leap::EventListener event( &screen );
+    kvs::leap::GestureEventListener event( &screen );
 
     return app.run();
 /*

@@ -1,6 +1,7 @@
 #pragma once
 #include <Leap.h>
 #include <KVS.oculus/Lib/Screen.h>
+#include <kvs/Vector3>
 
 
 namespace kvs
@@ -26,7 +27,9 @@ public:
     virtual void exitEvent() {}
 
 protected:
-    const Leap::Controller& controller() const { return m_controller; }
+    Leap::Controller& controller() { return m_controller; }
+    kvs::oculus::Screen& screen() { return *m_screen; }
+    kvs::Vec3 leapToWorld( const Leap::Vector& p_leap ) const;
 
 private:
     virtual void onInit( const Leap::Controller& controller );
