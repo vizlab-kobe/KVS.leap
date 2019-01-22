@@ -10,30 +10,40 @@ namespace leap
 {
 
 EventListener::EventListener( kvs::oculus::Screen* screen ):
-//    Leap::Listener( m_controller ),
-//    m_controller( *this ),
-//    m_controller( new Leap::Controller( (Leap::Listener&)*this ) ),
     m_screen( screen )
 {
-//    m_controller.addListener( *this );
-//    m_controller.setPolicy( Leap::Controller::POLICY_IMAGES );
+    m_controller.addListener( *this );
+    m_controller.setPolicy( Leap::Controller::POLICY_IMAGES );
 }
 
 EventListener::~EventListener()
 {
-//    m_controller.removeListener( *this );
+    m_controller.removeListener( *this );
 }
 
 void EventListener::onInit( const Leap::Controller& controller )
 {
-    std::cout << "EventListener::onInit()" << std::endl;
     this->initializeEvent();
 }
 
 void EventListener::onFrame( const Leap::Controller& controller )
 {
-    std::cout << "EventListener::onFrame()" << std::endl;
     this->frameEvent();
+}
+
+void EventListener::onConnect( const Leap::Controller& controller )
+{
+    this->connectEvent();
+}
+
+void EventListener::onDisconnect( const Leap::Controller& controller )
+{
+    this->disconnectEvent();
+}
+
+void EventListener::onExit( const Leap::Controller& controller )
+{
+    this->exitEvent();
 }
 
 } // end of namespace leap
