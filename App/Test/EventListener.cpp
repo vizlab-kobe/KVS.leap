@@ -51,9 +51,7 @@ void EventListener::onExit( const Leap::Controller& controller )
 
 kvs::Vec3 EventListener::leapToWorld( const Leap::Vector& p_leap ) const
 {
-    kvs::Vec3 v( p_leap.x, p_leap.y, p_leap.z );
-
-    kvs::oculus::HeadMountedDisplay hmd = m_screen->headMountedDisplay();
+    const kvs::oculus::HeadMountedDisplay& hmd = m_screen->headMountedDisplay();
     const double time = kvs::oculus::TimeInSecond();
     const ovrTrackingState state = hmd.trackingState( time );
     const ovrPosef headPose = state.HeadPose.ThePose;
@@ -67,16 +65,15 @@ kvs::Vec3 EventListener::leapToWorld( const Leap::Vector& p_leap ) const
          0,  0, -1, 0,
          0, -1,  0, -0.08f,
          0,  0,  0, 1 );
-        
+
     const kvs::Mat4 M(
         -1, 0,  0, 0,
          0, 1,  0, 0,
          0, 0, -1, 0,
          0, 0,  0, 1 );
-        
+
     const kvs::Mat4 M_lw = M_ow * M_lo;
     const kvs::Vec4 p_world = M_lw * M * kvs::Vec4( p_leap.x, p_leap.y, p_leap.z, 1 );
- 
     return p_world.xyz();
 }
 

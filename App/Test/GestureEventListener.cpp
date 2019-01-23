@@ -1,4 +1,6 @@
 #include "GestureEventListener.h"
+#include <kvs/Coordinate>
+
 
 namespace kvs
 {
@@ -7,32 +9,36 @@ namespace leap
 {
 
 GestureEventListener::GestureEventListener( kvs::oculus::Screen* screen ):
-    kvs::leap::EventListener( screen )
+    kvs::leap::EventListener( screen ),
+    m_is_grabbed( false ),
+    m_palm_distance( 0.0f )
 {
     controller().enableGesture( Leap::Gesture::TYPE_CIRCLE );
     controller().enableGesture( Leap::Gesture::TYPE_KEY_TAP );
     controller().enableGesture( Leap::Gesture::TYPE_SCREEN_TAP );
     controller().enableGesture( Leap::Gesture::TYPE_SWIPE );
+    screen->scene()->mouse()->disableAutoUpdating();
 }
 
 void GestureEventListener::swipeEvent()
 {
-    std::cout << "Swipe" << std::endl;
+//    std::cout << "Swipe" << std::endl;
 }
 
 void GestureEventListener::circleEvent()
 {
-    std::cout << "Circle" << std::endl;
+//    std::cout << "Circle" << std::endl;
 }
 
 void GestureEventListener::screenTapEvent()
 {
-    std::cout << "Screen Tap" << std::endl;
+//    std::cout << "Screen Tap" << std::endl;
+//    screen().scene()->reset();
 }
 
 void GestureEventListener::keyTapEvent()
 {
-    std::cout << "Key Tap" << std::endl;
+//    std::cout << "Key Tap" << std::endl;
 }
 
 void GestureEventListener::frameEvent()
@@ -40,9 +46,58 @@ void GestureEventListener::frameEvent()
     const Leap::Frame frame = controller().frame();
 
     const Leap::HandList hands = frame.hands();
-    for ( Leap::HandList::const_iterator hand = hands.begin(); hand != hands.end(); ++hand )
+    if ( hands.count() == 0 ) { m_is_grabbed = false; }
+    else if ( hands.count() == 1 )
     {
-
+        const Leap::Hand& hand = hands[0];
+        const Leap::Vector p = hand.palmPosition();
+        const kvs::Vec2i m( kvs::Vec2( p.x, -p.z ) * 5.0f );
+        if ( hand.grabStrength() > 0.5 )
+        {
+            if ( m_is_grabbed )
+            {
+                screen().scene()->mouseMoveFunction( m.x(), m.y() );
+            }
+            else
+            {
+                m_is_grabbed = true;
+                kvs::Mouse::OperationMode mode = hand.isRight() ? kvs::Mouse::Rotation : kvs::Mouse::Translation;
+                screen().scene()->mousePressFunction( m.x(), m.y(), mode );
+            }
+        }
+        else
+        {
+            m_is_grabbed = false;
+            screen().scene()->mouseReleaseFunction( m.x(), m.y() );
+        }
+    }
+    else if ( hands.count() == 2 )
+    {
+        const Leap::Hand& hand0 = hands[0];
+        const Leap::Hand& hand1 = hands[1];
+        const Leap::Vector p0 = hand0.palmPosition();
+        const Leap::Vector p1 = hand1.palmPosition();
+        if ( hand0.grabStrength() > 0.5 && hand1.grabStrength() > 0.5 )
+        {
+            if ( m_is_grabbed )
+            {
+                const float palm_distance = p0.distanceTo( p1 );
+                const int d = static_cast<int>( palm_distance - m_palm_distance );
+                screen().scene()->wheelFunction( d * 20 );
+                screen().scene()->updateXform();
+                m_palm_distance = palm_distance;
+            }
+            else
+            {
+                m_is_grabbed = true;
+                m_palm_distance = p0.distanceTo( p1 );
+            }
+        }
+        else
+        {
+            m_is_grabbed = false;
+            m_palm_distance = 0.0f;
+        }
     }
 
     const Leap::GestureList gestures = frame.gestures();

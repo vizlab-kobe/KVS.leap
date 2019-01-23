@@ -10,6 +10,10 @@ namespace leap
 
 class GestureEventListener : public kvs::leap::EventListener
 {
+private:
+    bool m_is_grabbed;
+    float m_palm_distance;
+
 public:
     GestureEventListener( kvs::oculus::Screen* screen );
 
