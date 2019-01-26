@@ -7,7 +7,7 @@
 #include <KVS.oculus/Lib/HeadMountedDisplay.h>
 #include <KVS.oculus/Lib/Application.h>
 #include <KVS.oculus/Lib/Screen.h>
-#include "GestureEventListener.h"
+#include <KVS.leap/Lib/GestureEventListener.h>
 
 
 int main( int argc, char** argv )
