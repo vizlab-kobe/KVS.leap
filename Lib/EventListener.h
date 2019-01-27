@@ -22,9 +22,6 @@ public:
 
     virtual void initializeEvent() {}
     virtual void frameEvent() {}
-    virtual void connectEvent() {}
-    virtual void disconnectEvent() {}
-    virtual void exitEvent() {}
 
 protected:
     Leap::Controller& controller() { return m_controller; }
