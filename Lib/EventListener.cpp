@@ -34,21 +34,6 @@ void EventListener::onFrame( const Leap::Controller& controller )
     this->frameEvent();
 }
 
-void EventListener::onConnect( const Leap::Controller& controller )
-{
-    this->connectEvent();
-}
-
-void EventListener::onDisconnect( const Leap::Controller& controller )
-{
-    this->disconnectEvent();
-}
-
-void EventListener::onExit( const Leap::Controller& controller )
-{
-    this->exitEvent();
-}
-
 kvs::Vec3 EventListener::leapToWorld( const Leap::Vector& p_leap ) const
 {
     const kvs::oculus::HeadMountedDisplay& hmd = m_screen->headMountedDisplay();

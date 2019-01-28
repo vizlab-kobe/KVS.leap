@@ -31,9 +31,6 @@ protected:
 private:
     virtual void onInit( const Leap::Controller& controller );
     virtual void onFrame( const Leap::Controller& controller );
-    virtual void onConnect( const Leap::Controller& controller );
-    virtual void onDisconnect( const Leap::Controller& controller );
-    virtual void onExit( const Leap::Controller& controller );
 };
 
 } // end of namespace leap
