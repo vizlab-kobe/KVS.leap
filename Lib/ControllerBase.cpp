@@ -1,4 +1,4 @@
-#include "EventListener.h"
+#include "ControllerBase.h"
 #include <iostream>
 #include <KVS.oculus/Lib/Screen.h>
 #include <KVS.oculus/Lib/OVR.h>
@@ -12,29 +12,29 @@ namespace kvs
 namespace leap
 {
 
-EventListener::EventListener( kvs::oculus::Screen* screen ):
+ControllerBase::ControllerBase( kvs::oculus::Screen* screen ):
     m_screen( screen )
 {
     m_input_device.addListener( *this );
     m_input_device.setPolicy( Leap::Controller::POLICY_IMAGES );
 }
 
-EventListener::~EventListener()
+ControllerBase::~ControllerBase()
 {
     m_input_device.removeListener( *this );
 }
 
-void EventListener::onInit( const Leap::Controller& controller )
+void ControllerBase::onInit( const Leap::Controller& controller )
 {
     this->initializeEvent();
 }
 
-void EventListener::onFrame( const Leap::Controller& controller )
+void ControllerBase::onFrame( const Leap::Controller& controller )
 {
     this->frameEvent();
 }
 
-kvs::Vec3 EventListener::leapToWorld( const Leap::Vector& p_leap ) const
+kvs::Vec3 ControllerBase::leapToWorld( const Leap::Vector& p_leap ) const
 {
     const kvs::oculus::HeadMountedDisplay& hmd = m_screen->headMountedDisplay();
     const double time = kvs::oculus::TimeInSecond();

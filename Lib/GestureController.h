@@ -1,5 +1,5 @@
 #pragma once
-#include "EventListener.h"
+#include "ControllerBase.h"
 
 
 namespace kvs
@@ -8,14 +8,14 @@ namespace kvs
 namespace leap
 {
 
-class GestureEventListener : public kvs::leap::EventListener
+class GestureController : public kvs::leap::ControllerBase
 {
 private:
     bool m_is_grabbed;
     float m_palm_distance;
 
 public:
-    GestureEventListener( kvs::oculus::Screen* screen );
+    GestureController( kvs::oculus::Screen* screen );
 
     void swipeEvent() {}
     void circleEvent() {}

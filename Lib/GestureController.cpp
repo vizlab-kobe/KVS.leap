@@ -1,4 +1,4 @@
-#include "GestureEventListener.h"
+#include "GestureController.h"
 #include <kvs/Coordinate>
 
 
@@ -8,8 +8,8 @@ namespace kvs
 namespace leap
 {
 
-GestureEventListener::GestureEventListener( kvs::oculus::Screen* screen ):
-    kvs::leap::EventListener( screen ),
+GestureController::GestureController( kvs::oculus::Screen* screen ):
+    kvs::leap::ControllerBase( screen ),
     m_is_grabbed( false ),
     m_palm_distance( 0.0f )
 {
@@ -20,7 +20,7 @@ GestureEventListener::GestureEventListener( kvs::oculus::Screen* screen ):
     screen->scene()->mouse()->disableAutoUpdating();
 }
 
-void GestureEventListener::frameEvent()
+void GestureController::frameEvent()
 {
     const Leap::Frame frame = inputDevice().frame();
 

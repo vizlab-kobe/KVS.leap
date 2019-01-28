@@ -11,15 +11,15 @@ namespace kvs
 namespace leap
 {
 
-class EventListener : public Leap::Listener
+class ControllerBase : public Leap::Listener
 {
 private:
     kvs::leap::InputDevice m_input_device;
     kvs::oculus::Screen* m_screen;
 
 public:
-    EventListener( kvs::oculus::Screen* screen );
-    ~EventListener();
+    ControllerBase( kvs::oculus::Screen* screen );
+    ~ControllerBase();
 
     virtual void initializeEvent() {}
     virtual void frameEvent() {}
