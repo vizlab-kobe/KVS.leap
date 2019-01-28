@@ -13,37 +13,16 @@ GestureEventListener::GestureEventListener( kvs::oculus::Screen* screen ):
     m_is_grabbed( false ),
     m_palm_distance( 0.0f )
 {
-    controller().enableGesture( Leap::Gesture::TYPE_CIRCLE );
-    controller().enableGesture( Leap::Gesture::TYPE_KEY_TAP );
-    controller().enableGesture( Leap::Gesture::TYPE_SCREEN_TAP );
-    controller().enableGesture( Leap::Gesture::TYPE_SWIPE );
+    inputDevice().enableGesture( Leap::Gesture::TYPE_CIRCLE );
+    inputDevice().enableGesture( Leap::Gesture::TYPE_KEY_TAP );
+    inputDevice().enableGesture( Leap::Gesture::TYPE_SCREEN_TAP );
+    inputDevice().enableGesture( Leap::Gesture::TYPE_SWIPE );
     screen->scene()->mouse()->disableAutoUpdating();
-}
-
-void GestureEventListener::swipeEvent()
-{
-//    std::cout << "Swipe" << std::endl;
-}
-
-void GestureEventListener::circleEvent()
-{
-//    std::cout << "Circle" << std::endl;
-}
-
-void GestureEventListener::screenTapEvent()
-{
-//    std::cout << "Screen Tap" << std::endl;
-//    screen().scene()->reset();
-}
-
-void GestureEventListener::keyTapEvent()
-{
-//    std::cout << "Key Tap" << std::endl;
 }
 
 void GestureEventListener::frameEvent()
 {
-    const Leap::Frame frame = controller().frame();
+    const Leap::Frame frame = inputDevice().frame();
 
     const Leap::HandList hands = frame.hands();
     if ( hands.count() == 0 ) { m_is_grabbed = false; }

@@ -15,13 +15,13 @@ namespace leap
 EventListener::EventListener( kvs::oculus::Screen* screen ):
     m_screen( screen )
 {
-    m_controller.addListener( *this );
-    m_controller.setPolicy( Leap::Controller::POLICY_IMAGES );
+    m_input_device.addListener( *this );
+    m_input_device.setPolicy( Leap::Controller::POLICY_IMAGES );
 }
 
 EventListener::~EventListener()
 {
-    m_controller.removeListener( *this );
+    m_input_device.removeListener( *this );
 }
 
 void EventListener::onInit( const Leap::Controller& controller )

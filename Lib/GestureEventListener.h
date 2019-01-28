@@ -17,10 +17,10 @@ private:
 public:
     GestureEventListener( kvs::oculus::Screen* screen );
 
-    void swipeEvent();
-    void circleEvent();
-    void screenTapEvent();
-    void keyTapEvent();
+    void swipeEvent() {}
+    void circleEvent() {}
+    void screenTapEvent() {}
+    void keyTapEvent() {}
 
 protected:
     virtual void frameEvent();
